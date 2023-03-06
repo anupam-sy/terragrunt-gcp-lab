@@ -1,0 +1,5 @@
+project_id    = "UPDATE_ME"
+name          = "storage-bkt-22022023"
+location      = "us-central1"
+storage_class = "STANDARD"
+force_destroy = true

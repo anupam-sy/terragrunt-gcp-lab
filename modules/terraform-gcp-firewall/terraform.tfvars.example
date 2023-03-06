@@ -1,0 +1,84 @@
+project_id   = "clear-tape-374907"
+network_name = "spl-vpc"
+
+rules = [
+  // allow ingress from iap proxy
+  {
+    name                    = "allow-ingress-from-iap-proxy"
+    description             = "allow-ingress-from-iap-proxy"
+    direction               = "INGRESS"
+    priority                = 1000
+    ranges                  = ["35.235.240.0/20"]
+    target_tags             = null
+    target_service_accounts = null
+    source_tags             = null
+    source_service_accounts = null
+
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["22", "3389"]
+      }
+    ]
+
+    deny = []
+
+    log_config = {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
+  },
+  // allow ingress from healthcheck
+  {
+    name                    = "allow-ingress-from-healthcheck"
+    description             = "allow-ingress-from-healthcheck"
+    direction               = "INGRESS"
+    priority                = 1000
+    ranges                  = ["35.191.0.0/16", "130.211.0.0/22", "209.85.152.0/22", "209.85.204.0/22"]
+    target_tags             = null
+    target_service_accounts = null
+    source_tags             = null
+    source_service_accounts = null
+
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["80"]
+      }
+    ]
+
+    deny = []
+
+    log_config = {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
+  },
+  // allow ingress for port 80, 8080, 443
+  {
+    name                    = "allow-ingress-for-apps"
+    description             = "allow-ingress-for-apps"
+    direction               = "INGRESS"
+    priority                = 1000
+    ranges                  = ["0.0.0.0/0"]
+    target_tags             = null
+    target_service_accounts = null
+    source_tags             = null
+    source_service_accounts = null
+
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["80", "443"]
+      },
+      {
+        protocol = "tcp"
+        ports    = ["8080"]
+      }
+    ]
+
+    deny = []
+
+    log_config = {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
+  },
+]
